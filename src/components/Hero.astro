@@ -1,0 +1,79 @@
+---
+import { PawPrint, Heart, MapPin, UsersRound, ClipboardList } from 'lucide-astro';
+---
+
+<section class="relative min-h-[620px] overflow-hidden pt-20">
+
+  <div class="absolute inset-0">
+    <img
+      src="/images/hero-lostpaws.png"
+      alt="Dog waiting to find its family"
+      class="h-full w-full object-cover"
+    />
+
+    <div class="absolute inset-0 bg-gradient-to-r from-[#f1f7ec] via-[#f1f7ec]/10 to-transparent"></div>
+  </div>
+
+  <div class="relative mx-auto flex min-h-[540px] max-w-7xl items-center px-6 lg:px-8">
+
+    <div class="max-w-xl py-20">
+
+        <h1 class="text-5xl font-bold leading-tight tracking-tight text-[#17372a] lg:text-6xl">
+            Help lost pets
+            <br />
+            <span class="whitespace-nowrap">
+                find their way home
+                <Heart
+                size={42}
+                strokeWidth={2}
+                class="ml-2 inline-block -translate-y-1 fill-[#8bb85a] text-[#8bb85a]"
+                />
+            </span>
+        </h1>
+
+      <p class="mt-6 max-w-lg text-lg leading-8 text-gray-600">
+        Report, search and help reunite pets with their families.
+      </p>
+
+      <div class="mt-8 flex flex-wrap gap-3">
+
+        <a
+        href="/report?status=lost"
+        class="flex items-center gap-2 rounded-lg bg-[#315c3e] px-6 py-4 text-sm font-semibold text-white shadow-sm transition hover:bg-[#264b32]"
+        >
+        <PawPrint size={18} strokeWidth={2.2} />
+        I Lost a Pet
+        </a>
+
+        <a
+        href="/report?status=found"
+        class="flex items-center gap-2 rounded-lg bg-white px-6 py-4 text-sm font-semibold text-[#17372a] shadow-sm ring-1 ring-gray-200 transition hover:ring-[#315c3e]"
+        >
+        <MapPin size={18} strokeWidth={2.2} />
+        I Found a Pet
+        </a>
+
+      </div>
+
+      <div class="mt-10 flex gap-10">
+
+        <div>
+          <p class="text-2xl font-bold text-[#17372a]">1,248</p>
+          <p class="mt-1 text-sm text-gray-500">Pets reunited</p>
+        </div>
+
+        <div>
+          <p class="text-2xl font-bold text-[#17372a]">2,356</p>
+          <p class="mt-1 text-sm text-gray-500">Reports posted</p>
+        </div>
+
+        <div>
+          <p class="text-2xl font-bold text-[#17372a]">8,765</p>
+          <p class="mt-1 text-sm text-gray-500">People helping</p>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
