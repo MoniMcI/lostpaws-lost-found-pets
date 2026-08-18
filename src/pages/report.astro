@@ -1,0 +1,445 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { PawPrint, MapPin, Upload, ArrowLeft } from 'lucide-astro';
+---
+
+<Layout
+  title="Report a Pet — LostPaws"
+  description="Report a lost or found pet on LostPaws."
+>
+  <Header />
+
+  <main class="bg-[#f8faf7]">
+
+    <!-- Page heading -->
+    <section class="mx-auto max-w-3xl px-6 pb-8 pt-32 lg:px-8">
+
+      <a
+        href="/"
+        class="inline-flex items-center gap-2 text-sm font-medium text-[#315c3e] transition hover:text-[#264b32]"
+      >
+        <ArrowLeft size={18} strokeWidth={2} />
+        Back to home
+      </a>
+
+      <div class="mt-8">
+        <p class="text-sm font-semibold uppercase tracking-wider text-[#8bb85a]">
+          Help a pet
+        </p>
+
+        <h1 class="mt-2 text-4xl font-bold tracking-tight text-[#17372a] sm:text-5xl">
+          Report a pet
+        </h1>
+
+        <p class="mt-4 max-w-2xl text-base leading-7 text-gray-600 sm:text-lg">
+          Share the details of a lost or found pet so the community can help.
+        </p>
+      </div>
+
+    </section>
+
+    <!-- Form -->
+    <section class="mx-auto max-w-3xl px-6 pb-16 lg:px-8">
+
+      <form
+        name="pet-report"
+        method="POST"
+        data-netlify="true"
+        data-netlify-honeypot="bot-field"
+        enctype="multipart/form-data"
+        action="/report-success"
+        class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-200 sm:p-8 lg:p-10"
+      >
+
+        <!-- Honeypot -->
+        <div hidden>
+            <label>
+                Don't fill this out if you're human:
+                <input name="bot-field" />
+            </label>
+        </div>
+
+        <!-- Status -->
+        <fieldset>
+          <legend class="text-lg font-bold text-[#17372a]">
+            What happened?
+          </legend>
+
+          <p class="mt-1 text-sm text-gray-500">
+            Tell us whether this pet is lost or has been found.
+          </p>
+
+          <div class="mt-5 grid gap-3 sm:grid-cols-2">
+
+            <!-- Lost -->
+            <label class="cursor-pointer">
+              <input
+                type="radio"
+                name="status"
+                value="Lost"
+                class="peer sr-only"
+                checked
+              />
+
+              <div class="rounded-xl border border-gray-200 p-5 transition peer-checked:border-[#315c3e] peer-checked:bg-[#f1f7ec] hover:border-[#315c3e]">
+                <div class="flex items-center gap-3">
+
+                  <PawPrint
+                    size={22}
+                    strokeWidth={1.8}
+                    class="text-[#e85d5d]"
+                  />
+
+                  <div>
+                    <p class="font-semibold text-[#17372a]">
+                      I lost a pet
+                    </p>
+
+                    <p class="mt-1 text-xs text-gray-500">
+                      My pet is missing.
+                    </p>
+                  </div>
+
+                </div>
+              </div>
+            </label>
+
+            <!-- Found -->
+            <label class="cursor-pointer">
+              <input
+                type="radio"
+                name="status"
+                value="Found"
+                class="peer sr-only"
+              />
+
+              <div class="rounded-xl border border-gray-200 p-5 transition peer-checked:border-[#315c3e] peer-checked:bg-[#f1f7ec] hover:border-[#315c3e]">
+                <div class="flex items-center gap-3">
+
+                  <MapPin
+                    size={22}
+                    strokeWidth={1.8}
+                    class="text-[#8bb85a]"
+                  />
+
+                  <div>
+                    <p class="font-semibold text-[#17372a]">
+                      I found a pet
+                    </p>
+
+                    <p class="mt-1 text-xs text-gray-500">
+                      I found a pet that may be lost.
+                    </p>
+                  </div>
+
+                </div>
+              </div>
+            </label>
+
+          </div>
+        </fieldset>
+
+        <!-- Pet information -->
+        <div class="mt-10 border-t border-gray-100 pt-8">
+
+          <h2 class="text-lg font-bold text-[#17372a]">
+            Pet information
+          </h2>
+
+          <div class="mt-6 grid gap-5 sm:grid-cols-2">
+
+            <!-- Name -->
+            <div>
+              <label
+                for="name"
+                class="text-sm font-medium text-gray-700"
+              >
+                Pet name
+              </label>
+
+              <input
+                id="name"
+                name="name"
+                type="text"
+                placeholder="e.g. Moro"
+                class="mt-2 h-12 w-full rounded-lg border border-gray-200 px-4 text-sm text-[#17372a] outline-none transition placeholder:text-gray-400 focus:border-[#315c3e] focus:ring-2 focus:ring-[#315c3e]/10"
+              />
+            </div>
+
+            <!-- Species -->
+            <div>
+              <label
+                for="species"
+                class="text-sm font-medium text-gray-700"
+              >
+                Species
+              </label>
+
+              <select
+                id="species"
+                name="species"
+                class="mt-2 h-12 w-full rounded-lg border border-gray-200 bg-white px-4 text-sm text-gray-700 outline-none transition focus:border-[#315c3e] focus:ring-2 focus:ring-[#315c3e]/10"
+              >
+                <option value="">Select species</option>
+                <option value="Dog">Dog</option>
+                <option value="Cat">Cat</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <!-- Breed -->
+            <div class="sm:col-span-2">
+              <label
+                for="breed"
+                class="text-sm font-medium text-gray-700"
+              >
+                Breed
+              </label>
+
+              <input
+                id="breed"
+                name="breed"
+                type="text"
+                placeholder="e.g. German Shepherd"
+                class="mt-2 h-12 w-full rounded-lg border border-gray-200 px-4 text-sm text-[#17372a] outline-none transition placeholder:text-gray-400 focus:border-[#315c3e] focus:ring-2 focus:ring-[#315c3e]/10"
+              />
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Photos -->
+        <div class="mt-10 border-t border-gray-100 pt-8">
+
+          <h2 class="text-lg font-bold text-[#17372a]">
+            Photos
+          </h2>
+
+          <p class="mt-1 text-sm text-gray-500">
+            Add up to 3 photos. A clear photo can make it easier to identify a pet.
+          </p>
+
+          <label
+            for="photos"
+            class="mt-5 flex min-h-36 cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-200 bg-gray-50 px-6 text-center transition hover:border-[#8bb85a] hover:bg-[#f1f7ec]"
+          >
+
+            <Upload
+              size={30}
+              strokeWidth={1.7}
+              class="text-[#315c3e]"
+            />
+
+            <p class="mt-3 text-sm font-semibold text-[#17372a]">
+              Upload photos
+            </p>
+
+            <p class="mt-1 text-xs text-gray-500">
+              JPG, PNG or WEBP · Up to 3 photos
+            </p>
+
+            <input
+              id="photos"
+              name="photos"
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              multiple
+              class="sr-only"
+            />
+
+          </label>
+
+        </div>
+
+        <!-- Date and location -->
+        <!-- Date and location -->
+        <div class="mt-10 border-t border-gray-100 pt-8">
+
+        <h2 class="text-lg font-bold text-[#17372a]">
+            When & where
+        </h2>
+
+        <div class="mt-6 grid gap-5 sm:grid-cols-2">
+
+            <!-- Date -->
+            <div>
+
+            <label
+                for="date"
+                class="text-sm font-medium text-gray-700"
+            >
+                Date
+            </label>
+
+            <input
+                id="date"
+                name="date"
+                type="date"
+                class="mt-2 h-12 w-full rounded-lg border border-gray-200 bg-white px-4 text-sm text-gray-700 outline-none transition focus:border-[#315c3e] focus:ring-2 focus:ring-[#315c3e]/10"
+            />
+
+            </div>
+
+            <!-- Location -->
+            <div>
+
+            <label
+                for="location"
+                class="text-sm font-medium text-gray-700"
+            >
+                Location
+            </label>
+
+            <input
+                id="location"
+                name="location"
+                type="text"
+                placeholder="City or area"
+                class="mt-2 h-12 w-full rounded-lg border border-gray-200 bg-white px-4 text-sm text-[#17372a] outline-none transition placeholder:text-gray-400 focus:border-[#315c3e] focus:ring-2 focus:ring-[#315c3e]/10"
+            />
+
+            </div>
+
+        </div>
+
+        </div>         
+
+
+        <!-- About the pet -->
+        <div class="mt-10 border-t border-gray-100 pt-8">
+
+          <h2 class="text-lg font-bold text-[#17372a]">
+            About the pet
+          </h2>
+
+          <div class="mt-6 space-y-5">
+
+            <!-- Description -->
+            <div>
+
+              <label
+                for="description"
+                class="text-sm font-medium text-gray-700"
+              >
+                Description
+              </label>
+
+              <textarea
+                id="description"
+                name="description"
+                rows="4"
+                placeholder="Tell us what happened and anything people should know..."
+                class="mt-2 w-full resize-y rounded-lg border border-gray-200 px-4 py-3 text-sm leading-6 text-[#17372a] outline-none transition placeholder:text-gray-400 focus:border-[#315c3e] focus:ring-2 focus:ring-[#315c3e]/10"
+              ></textarea>
+
+            </div>
+
+            <!-- Distinguishing features -->
+            <div>
+
+              <label
+                for="distinguishingFeatures"
+                class="text-sm font-medium text-gray-700"
+              >
+                Distinguishing features
+              </label>
+
+              <textarea
+                id="distinguishingFeatures"
+                name="distinguishingFeatures"
+                rows="3"
+                placeholder="Color, markings, collar, scars, special characteristics..."
+                class="mt-2 w-full resize-y rounded-lg border border-gray-200 px-4 py-3 text-sm leading-6 text-[#17372a] outline-none transition placeholder:text-gray-400 focus:border-[#315c3e] focus:ring-2 focus:ring-[#315c3e]/10"
+              ></textarea>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Contact -->
+        <div class="mt-10 border-t border-gray-100 pt-8">
+
+          <h2 class="text-lg font-bold text-[#17372a]">
+            Contact information
+          </h2>
+
+          <p class="mt-1 text-sm text-gray-500">
+            How can someone contact you about this pet?
+          </p>
+
+          <div class="mt-6 grid gap-5 sm:grid-cols-2">
+
+            <!-- Contact name -->
+            <div>
+
+              <label
+                for="contactName"
+                class="text-sm font-medium text-gray-700"
+              >
+                Your name
+              </label>
+
+              <input
+                id="contactName"
+                name="contactName"
+                type="text"
+                placeholder="Your name"
+                class="mt-2 h-12 w-full rounded-lg border border-gray-200 px-4 text-sm text-[#17372a] outline-none transition placeholder:text-gray-400 focus:border-[#315c3e] focus:ring-2 focus:ring-[#315c3e]/10"
+              />
+
+            </div>
+
+            <!-- Contact info -->
+            <div>
+
+              <label
+                for="contactInfo"
+                class="text-sm font-medium text-gray-700"
+              >
+                Phone, WhatsApp or email
+              </label>
+
+              <input
+                id="contactInfo"
+                name="contactInfo"
+                type="text"
+                placeholder="How can people reach you?"
+                class="mt-2 h-12 w-full rounded-lg border border-gray-200 px-4 py-3 text-sm text-[#17372a] outline-none transition placeholder:text-gray-400 focus:border-[#315c3e] focus:ring-2 focus:ring-[#315c3e]/10"
+              />
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Submit -->
+        <div class="mt-10 border-t border-gray-100 pt-8">
+
+          <button
+            type="submit"
+            class="flex w-full items-center justify-center gap-2 rounded-lg bg-[#315c3e] px-6 py-4 text-sm font-semibold text-white shadow-sm transition hover:bg-[#264b32]"
+          >
+            <PawPrint size={18} strokeWidth={2} />
+            Submit Report
+          </button>
+
+          <p class="mt-3 text-center text-xs leading-5 text-gray-400">
+            By submitting this report, you agree to provide accurate information.
+          </p>
+
+        </div>
+
+      </form>
+
+    </section>
+
+  </main>
+
+  <Footer />
+</Layout>

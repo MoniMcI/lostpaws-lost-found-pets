@@ -1,0 +1,90 @@
+---
+import { Search, MapPin, ChevronDown } from 'lucide-astro';
+---
+
+<section class="relative z-10 mx-auto -mt-10 max-w-6xl px-6 lg:-mt-12 lg:px-8">
+  <div class="rounded-2xl bg-white p-4 shadow-xl ring-1 ring-gray-100">
+
+    <div class="grid gap-3 lg:grid-cols-[minmax(0,2fr)_1.1fr_1.1fr_1.1fr_auto]">
+
+      <!-- Search text -->
+      <div class="relative">
+        <Search
+          size={20}
+          strokeWidth={1.8}
+          class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"
+        />
+
+        <input
+          type="search"
+          placeholder="Search by name, characteristics, area..."
+          class="h-12 w-full rounded-lg border border-gray-200 bg-white pl-12 pr-4 text-sm text-[#17372a] outline-none transition placeholder:text-gray-400 focus:border-[#315c3e] focus:ring-2 focus:ring-[#315c3e]/10"
+        />
+      </div>
+
+      <!-- Lost / Found -->
+      <button
+        type="button"
+        class="flex h-12 items-center justify-between rounded-lg border border-gray-200 px-4 text-left text-sm font-medium text-gray-700 transition hover:border-[#315c3e]"
+      >
+        <span>Lost and Found</span>
+
+        <ChevronDown
+          size={18}
+          strokeWidth={1.8}
+          class="text-gray-500"
+        />
+      </button>
+
+      <!-- Species -->
+      <button
+        type="button"
+        class="flex h-12 items-center justify-between rounded-lg border border-gray-200 px-4 text-left text-sm font-medium text-gray-700 transition hover:border-[#315c3e]"
+      >
+        <span>All species</span>
+
+        <ChevronDown
+          size={18}
+          strokeWidth={1.8}
+          class="text-gray-500"
+        />
+      </button>
+
+      <!-- Location -->
+      <button
+        type="button"
+        class="flex h-12 items-center justify-between rounded-lg border border-gray-200 px-4 text-left text-sm font-medium text-gray-700 transition hover:border-[#315c3e]"
+      >
+        <span class="flex min-w-0 items-center gap-2">
+          <MapPin
+            size={18}
+            strokeWidth={1.8}
+            class="shrink-0 text-[#315c3e]"
+          />
+
+          <span class="truncate">All areas</span>
+        </span>
+
+        <ChevronDown
+          size={18}
+          strokeWidth={1.8}
+          class="shrink-0 text-gray-500"
+        />
+      </button>
+
+      <!-- Search button -->
+      <button
+        type="button"
+        class="flex h-12 items-center justify-center gap-2 rounded-lg bg-[#315c3e] px-7 text-sm font-semibold text-white transition hover:bg-[#264b32]"
+      >
+        <Search
+          size={18}
+          strokeWidth={2}
+        />
+
+        Search
+      </button>
+
+    </div>
+  </div>
+</section>

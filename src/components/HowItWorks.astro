@@ -1,0 +1,116 @@
+---
+import { FilePlus2, Search, HeartHandshake } from 'lucide-astro';
+---
+
+<section class="bg-[#f1f7ec] py-16 sm:py-20">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+
+    <!-- Section heading -->
+    <div class="mx-auto max-w-2xl text-center">
+      <p class="text-sm font-semibold uppercase tracking-wider text-[#8bb85a]">
+        Simple and effective
+      </p>
+
+      <h2 class="mt-2 text-3xl font-bold tracking-tight text-[#17372a] sm:text-4xl">
+        How LostPaws works
+      </h2>
+
+      <p class="mt-4 text-base leading-7 text-gray-600 sm:text-lg">
+        A simple way to report lost pets, search for them and help bring them home.
+      </p>
+    </div>
+
+    <!-- Steps -->
+    <div class="mt-12 grid gap-10 md:grid-cols-3 md:gap-8">
+
+      <!-- Step 1 -->
+      <div class="relative text-center">
+
+        <div
+          class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-white shadow-sm ring-1 ring-[#dce8d5]"
+        >
+          <FilePlus2
+            size={30}
+            strokeWidth={1.8}
+            class="text-[#315c3e]"
+          />
+        </div>
+
+        <div class="mt-5">
+          <span class="text-sm font-semibold text-[#8bb85a]">
+            Step 01
+          </span>
+
+          <h3 class="mt-1 text-xl font-bold text-[#17372a]">
+            Report a pet
+          </h3>
+
+          <p class="mx-auto mt-3 max-w-sm text-sm leading-6 text-gray-600">
+            Share a photo, location and important details about a lost or found pet.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Step 2 -->
+      <div class="relative text-center">
+
+        <div
+          class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-white shadow-sm ring-1 ring-[#dce8d5]"
+        >
+          <Search
+            size={30}
+            strokeWidth={1.8}
+            class="text-[#315c3e]"
+          />
+        </div>
+
+        <div class="mt-5">
+          <span class="text-sm font-semibold text-[#8bb85a]">
+            Step 02
+          </span>
+
+          <h3 class="mt-1 text-xl font-bold text-[#17372a]">
+            Search & connect
+          </h3>
+
+          <p class="mx-auto mt-3 max-w-sm text-sm leading-6 text-gray-600">
+            Search reports by description, location and other characteristics to find a possible match.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Step 3 -->
+      <div class="relative text-center">
+
+        <div
+          class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-white shadow-sm ring-1 ring-[#dce8d5]"
+        >
+          <HeartHandshake
+            size={30}
+            strokeWidth={1.8}
+            class="text-[#315c3e]"
+          />
+        </div>
+
+        <div class="mt-5">
+          <span class="text-sm font-semibold text-[#8bb85a]">
+            Step 03
+          </span>
+
+          <h3 class="mt-1 text-xl font-bold text-[#17372a]">
+            Bring them home
+          </h3>
+
+          <p class="mx-auto mt-3 max-w-sm text-sm leading-6 text-gray-600">
+            Connect with the person who reported the pet and help reunite them with their family.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>

@@ -1,0 +1,47 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { CheckCircle, ArrowLeft } from 'lucide-astro';
+---
+
+<Layout
+  title="Report submitted — LostPaws"
+  description="Your pet report has been submitted to LostPaws."
+>
+  <Header />
+
+  <main class="flex min-h-[70vh] items-center justify-center bg-[#f8faf7] px-6 py-20">
+
+    <section class="w-full max-w-xl rounded-2xl bg-white p-8 text-center shadow-sm ring-1 ring-gray-200 sm:p-10">
+
+      <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#f1f7ec]">
+        <CheckCircle
+          size={32}
+          strokeWidth={1.8}
+          class="text-[#315c3e]"
+        />
+      </div>
+
+      <h1 class="mt-6 text-3xl font-bold tracking-tight text-[#17372a]">
+        Report submitted
+      </h1>
+
+      <p class="mx-auto mt-4 max-w-md text-base leading-7 text-gray-600">
+        Thank you for helping a lost pet find its way home. Your report has been received and will be reviewed.
+      </p>
+
+      <a
+        href="/"
+        class="mt-8 inline-flex items-center gap-2 rounded-lg bg-[#315c3e] px-6 py-4 text-sm font-semibold text-white transition hover:bg-[#264b32]"
+      >
+        <ArrowLeft size={18} strokeWidth={2} />
+        Back to LostPaws
+      </a>
+
+    </section>
+
+  </main>
+
+  <Footer />
+</Layout>

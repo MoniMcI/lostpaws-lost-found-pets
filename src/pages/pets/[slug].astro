@@ -1,0 +1,185 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { MapPin, CalendarDays, Phone, ArrowLeft } from 'lucide-astro';
+
+export async function getStaticPaths() {
+  const pets = await getCollection('pets');
+
+  return pets.map((pet) => ({
+    params: {
+      slug: pet.id,
+    },
+    props: {
+      pet,
+    },
+  }));
+}
+
+const { pet } = Astro.props;
+const { Content } = await render(pet);
+
+const statusClasses = {
+  Lost: 'bg-[#e85d5d]',
+  Found: 'bg-[#8bb85a]',
+  Reunited: 'bg-[#315c3e]',
+};
+---
+
+<Layout
+  title={`${pet.data.name} — LostPaws`}
+  description={`${pet.data.name} - ${pet.data.status} pet report`}
+>
+  <Header />
+
+  <main class="bg-[#f8faf7]">
+
+    <section class="mx-auto max-w-6xl px-6 py-12 lg:px-8 lg:py-16">
+
+      <!-- Back -->
+      <a
+        href="/"
+        class="inline-flex items-center gap-2 text-sm font-medium text-[#315c3e] transition hover:text-[#264b32]"
+      >
+        <ArrowLeft size={18} strokeWidth={2} />
+        Back to reports
+      </a>
+
+      <!-- Pet report -->
+      <article class="mt-8 overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-gray-200">
+
+        <div class="grid lg:grid-cols-2">
+
+          <!-- Photo -->
+          <div class="relative aspect-[4/3]">
+
+            <img
+                src={pet.data.photos[0]}
+                alt={`${pet.data.name} - ${pet.data.breed}`}
+                class="h-full w-full object-contain"
+            />
+
+            <span
+              class:list={[
+                'absolute left-5 top-5 rounded-full px-4 py-2 text-sm font-bold text-white',
+                statusClasses[pet.data.status],
+              ]}
+            >
+              {pet.data.status}
+            </span>
+
+          </div>
+
+          <!-- Information -->
+          <div class="p-6 sm:p-8 lg:p-10">
+
+            <p class="text-sm font-semibold uppercase tracking-wider text-[#8bb85a]">
+              {pet.data.species}
+            </p>
+
+            <h1 class="mt-2 text-4xl font-bold tracking-tight text-[#17372a]">
+              {pet.data.name}
+            </h1>
+
+            <p class="mt-2 text-base text-gray-500">
+              {pet.data.breed}
+            </p>
+
+            <!-- Basic information -->
+            <div class="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2">
+
+                <div class="flex items-start gap-3">
+                    <MapPin
+                    size={20}
+                    strokeWidth={1.8}
+                    class="mt-0.5 shrink-0 text-[#315c3e]"
+                    />
+
+                    <div>
+                    <p class="text-xs font-semibold uppercase tracking-wide text-gray-400">
+                        Location
+                    </p>
+
+                    <p class="mt-1 text-sm text-gray-700">
+                        {pet.data.location}
+                    </p>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-3">
+                    <CalendarDays
+                    size={20}
+                    strokeWidth={1.8}
+                    class="mt-0.5 shrink-0 text-[#315c3e]"
+                    />
+
+                    <div>
+                    <p class="text-xs font-semibold uppercase tracking-wide text-gray-400">
+                        Date
+                    </p>
+
+                    <p class="mt-1 text-sm text-gray-700">
+                        {pet.data.date.toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        })}
+                    </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Description -->
+            <div class="mt-8 ">
+
+              <h2 class="text-lg font-bold text-[#17372a]">
+                Description
+              </h2>
+
+              <div class="prose prose-sm mt-3 max-w-none text-gray-600">
+                <Content />
+              </div>
+
+            </div>
+
+            <!-- Distinguishing features -->
+            <div class="mt-8">
+
+              <h2 class="text-lg font-bold text-[#17372a]">
+                Distinguishing features
+              </h2>
+
+              <p class="mt-3 text-sm leading-6 text-gray-600">
+                {pet.data.distinguishingFeatures}
+              </p>
+
+            </div>
+
+            <!-- Contact -->
+            <div class="mt-8">
+
+              <a
+                href="#contact"
+                class="flex w-full items-center justify-center gap-2 rounded-lg bg-[#315c3e] px-6 py-4 text-sm font-semibold text-white transition hover:bg-[#264b32]"
+              >
+                <Phone size={18} strokeWidth={2} />
+                Contact {pet.data.contactName}
+              </a>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </article>
+
+    </section>
+
+  </main>
+
+  <Footer />
+</Layout>

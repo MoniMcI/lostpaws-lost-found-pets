@@ -1,0 +1,131 @@
+---
+import { getCollection } from 'astro:content';
+import { MapPin, CalendarDays, ArrowRight } from 'lucide-astro';
+
+const pets = await getCollection('pets');
+
+const reports = pets.slice(0, 5);
+---
+
+<section class="mx-auto max-w-7xl px-6 py-16 lg:px-8">
+
+  <!-- Section header -->
+  <div class="mb-8 flex items-center justify-between">
+
+    <h2 class="text-2xl font-bold tracking-tight text-[#17372a] sm:text-3xl">
+      Recent Reports
+    </h2>
+
+    <a
+      href="/lost"
+      class="hidden items-center gap-2 text-sm font-semibold text-[#315c3e] transition hover:text-[#264b32] sm:flex"
+    >
+      View all
+      <ArrowRight size={18} strokeWidth={2} />
+    </a>
+
+  </div>
+
+  <!-- Cards -->
+  <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+
+    {reports.map((report) => (
+
+      <a
+        href={`/pets/${report.id}`}
+        class="block"
+      >
+
+        <article
+          class="overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-gray-200 transition duration-200 hover:-translate-y-1 hover:shadow-md"
+        >
+
+          <!-- Image -->
+          <div class="relative aspect-[4/3] overflow-hidden">
+
+            <img
+              src={report.data.photos[0]}
+              alt={`${report.data.name} - ${report.data.status.toLowerCase()} pet`}
+              class="h-full w-full object-cover"
+              loading="lazy"
+            />
+
+            <!-- Status -->
+            <span
+              class:list={[
+                'absolute left-3 top-3 rounded-full px-3 py-1 text-xs font-bold text-white',
+                report.data.status === 'Lost'
+                  ? 'bg-[#e85d5d]'
+                  : report.data.status === 'Found'
+                    ? 'bg-[#8bb85a]'
+                    : 'bg-[#315c3e]',
+              ]}
+            >
+              {report.data.status.toUpperCase()}
+            </span>
+
+          </div>
+
+          <!-- Information -->
+          <div class="p-4">
+
+            <h3 class="text-base font-bold text-[#17372a]">
+              {report.data.name}
+            </h3>
+
+            <p class="mt-1 text-xs text-gray-500">
+              {report.data.species} · {report.data.breed}
+            </p>
+
+            <div class="mt-4 space-y-2">
+
+              <div class="flex items-center gap-2 text-xs text-gray-500">
+                <MapPin
+                  size={15}
+                  strokeWidth={1.8}
+                  class="shrink-0"
+                />
+                <span>{report.data.location}</span>
+              </div>
+
+              <div class="flex items-center gap-2 text-xs text-gray-500">
+                <CalendarDays
+                  size={15}
+                  strokeWidth={1.8}
+                  class="shrink-0"
+                />
+                <span>
+                  {report.data.date.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                  })}
+                </span>
+              </div>
+
+            </div>
+
+          </div>
+
+        </article>
+
+      </a>
+
+    ))}
+
+  </div>
+
+  <!-- Mobile View all -->
+  <div class="mt-6 flex justify-center sm:hidden">
+
+    <a
+      href="/lost"
+      class="flex items-center gap-2 text-sm font-semibold text-[#315c3e]"
+    >
+      View all
+      <ArrowRight size={18} strokeWidth={2} />
+    </a>
+
+  </div>
+
+</section>

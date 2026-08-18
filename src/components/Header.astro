@@ -1,10 +1,10 @@
 ---
-import { PawPrint } from 'lucide-astro';
 ---
 
 <header class="absolute top-0 left-0 right-0 z-20 bg-white">
   <div class="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-8">
 
+    <!-- Logo -->
     <a href="/" class="flex items-center gap-2">
       <img
         src="/images/lostpaws-paw.png"
@@ -15,9 +15,10 @@ import { PawPrint } from 'lucide-astro';
       <span class="text-2xl font-bold tracking-tight text-[#17372a]">
         LostPaws
       </span>
-    </a> 
+    </a>
 
-    <nav class="hidden items-center gap-8 md:flex">
+    <!-- Desktop navigation -->
+    <nav class="hidden items-center gap-8 lg:flex">
       <a
         href="/"
         class="border-b-2 border-[#315c3e] py-7 text-sm font-medium text-[#315c3e]"
@@ -25,24 +26,37 @@ import { PawPrint } from 'lucide-astro';
         Home
       </a>
 
-      <a href="/lost" class="text-sm font-medium text-gray-700 hover:text-[#315c3e]">
+      <a
+        href="/lost"
+        class="text-sm font-medium text-gray-700 hover:text-[#315c3e]"
+      >
         Lost Pets
       </a>
 
-      <a href="/found" class="text-sm font-medium text-gray-700 hover:text-[#315c3e]">
+      <a
+        href="/found"
+        class="text-sm font-medium text-gray-700 hover:text-[#315c3e]"
+      >
         Found Pets
       </a>
 
-      <a href="/how-it-works" class="text-sm font-medium text-gray-700 hover:text-[#315c3e]">
+      <a
+        href="/how-it-works"
+        class="text-sm font-medium text-gray-700 hover:text-[#315c3e]"
+      >
         How It Works
       </a>
 
-      <a href="/faq" class="text-sm font-medium text-gray-700 hover:text-[#315c3e]">
+      <a
+        href="/faq"
+        class="text-sm font-medium text-gray-700 hover:text-[#315c3e]"
+      >
         FAQ
       </a>
     </nav>
 
-    <div class="hidden items-center gap-3 md:flex">
+    <!-- Desktop actions -->
+    <div class="hidden items-center gap-3 lg:flex">
       <a
         href="/report"
         class="rounded-lg bg-[#315c3e] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#264b32]"
@@ -58,5 +72,102 @@ import { PawPrint } from 'lucide-astro';
       </a>
     </div>
 
+    <!-- Mobile / tablet menu button -->
+    <button
+      id="menu-button"
+      type="button"
+      class="flex h-10 w-10 items-center justify-center rounded-lg text-[#17372a] hover:bg-[#f1f7ec] lg:hidden"
+      aria-label="Open menu"
+      aria-expanded="false"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="2"
+        stroke="currentColor"
+        class="h-6 w-6"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M4 6h16M4 12h16M4 18h16"
+        />
+      </svg>
+    </button>
+
+  </div>
+
+  <!-- Mobile / tablet menu -->
+  <div
+    id="mobile-menu"
+    class="hidden border-t border-gray-100 bg-white px-6 pb-6 pt-4 lg:hidden"
+  >
+    <nav class="flex flex-col">
+
+      <a
+        href="/"
+        class="border-b border-gray-100 py-4 text-sm font-medium text-[#315c3e]"
+      >
+        Home
+      </a>
+
+      <a
+        href="/lost"
+        class="border-b border-gray-100 py-4 text-sm font-medium text-gray-700"
+      >
+        Lost Pets
+      </a>
+
+      <a
+        href="/found"
+        class="border-b border-gray-100 py-4 text-sm font-medium text-gray-700"
+      >
+        Found Pets
+      </a>
+
+      <a
+        href="/how-it-works"
+        class="border-b border-gray-100 py-4 text-sm font-medium text-gray-700"
+      >
+        How It Works
+      </a>
+
+      <a
+        href="/faq"
+        class="border-b border-gray-100 py-4 text-sm font-medium text-gray-700"
+      >
+        FAQ
+      </a>
+
+      <div class="mt-5 flex flex-col gap-3">
+        <a
+          href="/report"
+          class="rounded-lg bg-[#315c3e] px-5 py-3 text-center text-sm font-semibold text-white"
+        >
+          + Report a Pet
+        </a>
+
+        <a
+          href="/login"
+          class="rounded-lg border border-gray-300 px-5 py-3 text-center text-sm font-medium text-gray-700"
+        >
+          Log In
+        </a>
+      </div>
+
+    </nav>
   </div>
 </header>
+
+<script>
+  const button = document.querySelector('#menu-button');
+  const menu = document.querySelector('#mobile-menu');
+
+  button?.addEventListener('click', () => {
+    const isOpen = button.getAttribute('aria-expanded') === 'true';
+
+    button.setAttribute('aria-expanded', String(!isOpen));
+    menu?.classList.toggle('hidden');
+  });
+</script>
