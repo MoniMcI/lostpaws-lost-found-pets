@@ -49,7 +49,7 @@ import { PawPrint, MapPin, Upload, ArrowLeft } from 'lucide-astro';
         data-netlify="true"
         data-netlify-honeypot="bot-field"
         enctype="multipart/form-data"
-        action="/report-success"
+        action="/report-success/"
         class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-200 sm:p-8 lg:p-10"
       >
 
@@ -214,45 +214,87 @@ import { PawPrint, MapPin, Upload, ArrowLeft } from 'lucide-astro';
         <!-- Photos -->
         <div class="mt-10 border-t border-gray-100 pt-8">
 
-          <h2 class="text-lg font-bold text-[#17372a]">
+        <h2 class="text-lg font-bold text-[#17372a]">
             Photos
-          </h2>
+        </h2>
 
-          <p class="mt-1 text-sm text-gray-500">
+        <p class="mt-1 text-sm text-gray-500">
             Add up to 3 photos. A clear photo can make it easier to identify a pet.
-          </p>
+        </p>
 
-          <label
+        <!-- Upload area -->
+        <label
             for="photos"
-            class="mt-5 flex min-h-36 cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-200 bg-gray-50 px-6 text-center transition hover:border-[#8bb85a] hover:bg-[#f1f7ec]"
-          >
+            class="mt-5 flex min-h-36 cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-200 bg-gray-50 px-6 py-6 text-center transition hover:border-[#8bb85a] hover:bg-[#f1f7ec]"
+        >
 
             <Upload
-              size={30}
-              strokeWidth={1.7}
-              class="text-[#315c3e]"
+            size={30}
+            strokeWidth={1.7}
+            class="text-[#315c3e]"
             />
 
             <p class="mt-3 text-sm font-semibold text-[#17372a]">
-              Upload photos
+            Upload photos
             </p>
 
             <p class="mt-1 text-xs text-gray-500">
-              JPG, PNG or WEBP · Up to 3 photos
+            JPG, PNG or WEBP · Up to 3 photos
             </p>
 
             <input
-              id="photos"
-              name="photos"
-              type="file"
-              accept="image/jpeg,image/png,image/webp"
-              multiple
-              class="sr-only"
+            id="photos"
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            multiple
+            class="sr-only"
             />
 
-          </label>
+        </label>
+
+        <!-- Preview -->
+        <div
+            id="photo-preview"
+            class="mt-4 hidden grid grid-cols-3 gap-3"
+        >
+        </div>
+
+        <!-- Counter -->
+        <p
+            id="photo-count"
+            class="mt-3 hidden text-center text-xs font-medium text-gray-500"
+        >
+            0 / 3 photos
+        </p>
+
+        <!-- Netlify file fields -->
+        <div class="hidden">
+
+            <input
+            id="photo1"
+            name="photo1"
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            />
+
+            <input
+            id="photo2"
+            name="photo2"
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            />
+
+            <input
+            id="photo3"
+            name="photo3"
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            />
 
         </div>
+
+        </div>         
+
 
         <!-- Date and location -->
         <!-- Date and location -->
@@ -443,3 +485,80 @@ import { PawPrint, MapPin, Upload, ArrowLeft } from 'lucide-astro';
 
   <Footer />
 </Layout>
+
+<script>
+  const photoInput = document.querySelector('#photos');
+  const preview = document.querySelector('#photo-preview');
+  const photoCount = document.querySelector('#photo-count');
+
+  const photo1 = document.querySelector('#photo1');
+  const photo2 = document.querySelector('#photo2');
+  const photo3 = document.querySelector('#photo3');
+
+  if (
+    photoInput instanceof HTMLInputElement &&
+    preview instanceof HTMLElement &&
+    photoCount instanceof HTMLElement &&
+    photo1 instanceof HTMLInputElement &&
+    photo2 instanceof HTMLInputElement &&
+    photo3 instanceof HTMLInputElement
+  ) {
+
+    photoInput.addEventListener('change', () => {
+
+      const files = Array.from(photoInput.files ?? []);
+
+      if (files.length > 3) {
+        alert('You can upload up to 3 photos.');
+        photoInput.value = '';
+        preview.innerHTML = '';
+        preview.classList.add('hidden');
+        photoCount.classList.add('hidden');
+        return;
+      }
+
+      preview.innerHTML = '';
+
+      const fileInputs = [photo1, photo2, photo3];
+
+      fileInputs.forEach((input) => {
+        input.value = '';
+      });
+
+      files.forEach((file, index) => {
+
+        const transfer = new DataTransfer();
+        transfer.items.add(file);
+        fileInputs[index].files = transfer.files;
+
+        const wrapper = document.createElement('div');
+
+        wrapper.className =
+          'relative aspect-square overflow-hidden rounded-lg bg-gray-100 ring-1 ring-gray-200';
+
+        const image = document.createElement('img');
+
+        image.src = URL.createObjectURL(file);
+        image.alt = `Selected pet photo ${index + 1}`;
+        image.className = 'h-full w-full object-cover';
+
+        wrapper.appendChild(image);
+        preview.appendChild(wrapper);
+      });
+
+      if (files.length > 0) {
+        preview.classList.remove('hidden');
+
+        photoCount.textContent =
+          `${files.length} / 3 photos`;
+
+        photoCount.classList.remove('hidden');
+      } else {
+        preview.classList.add('hidden');
+        photoCount.classList.add('hidden');
+      }
+
+    });
+
+  }
+</script>
