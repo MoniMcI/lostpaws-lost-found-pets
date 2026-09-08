@@ -3,6 +3,8 @@ backend:
   repo: MoniMcI/lostpaws-lost-found-pets
   branch: main
 
+publish_mode: editorial_workflow
+
 media_folder: "public/images/pets"
 public_folder: "/images/pets"
 
