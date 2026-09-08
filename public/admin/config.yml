@@ -13,6 +13,7 @@ collections:
     label: Pets
     folder: src/content/pets
     create: true
+    identifier_field: name
     slug: "{{slug}}"
 
     fields:
