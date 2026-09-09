@@ -504,29 +504,93 @@ import { PawPrint, MapPin, Upload, ArrowLeft } from 'lucide-astro';
     photo3 instanceof HTMLInputElement
   ) {
 
-    photoInput.addEventListener('change', () => {
+    const countElement = photoCount;
 
-      const files = Array.from(photoInput.files ?? []);
+    const fileInputs = [photo1, photo2, photo3];
 
-      if (files.length > 3) {
-        alert('You can upload up to 3 photos.');
-        photoInput.value = '';
-        preview.innerHTML = '';
-        preview.classList.add('hidden');
-        photoCount.classList.add('hidden');
-        return;
-      }
+    const MAX_PHOTOS = 3;
+    const MAX_WIDTH = 1450;
+    const MAX_HEIGHT = 1085;
+    const WEBP_QUALITY = 0.85;
 
+    const selectedFiles = [];
+
+    function optimizeImage(file: File): Promise<File> {
+      return new Promise((resolve, reject) => {
+        const image = new Image();
+        const objectUrl = URL.createObjectURL(file);
+
+        image.onload = () => {
+          let width = image.naturalWidth;
+          let height = image.naturalHeight;
+
+          const scale = Math.min(
+            MAX_WIDTH / width,
+            MAX_HEIGHT / height,
+            1
+          );
+
+          width = Math.round(width * scale);
+          height = Math.round(height * scale);
+
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+
+          const context = canvas.getContext('2d');
+
+          if (!context) {
+            URL.revokeObjectURL(objectUrl);
+            reject(new Error('Could not process image.'));
+            return;
+          }
+
+          context.drawImage(image, 0, 0, width, height);
+
+          canvas.toBlob(
+            (blob) => {
+              URL.revokeObjectURL(objectUrl);
+
+              if (!blob) {
+                reject(new Error('Could not convert image.'));
+                return;
+              }
+
+              const baseName = file.name.replace(/\.[^/.]+$/, '');
+
+              const optimizedFile = new File(
+                [blob],
+                `${baseName}.webp`,
+                {
+                  type: 'image/webp',
+                  lastModified: Date.now(),
+                }
+              );
+
+              resolve(optimizedFile);
+            },
+            'image/webp',
+            WEBP_QUALITY
+          );
+        };
+
+        image.onerror = () => {
+          URL.revokeObjectURL(objectUrl);
+          reject(new Error('Could not load image.'));
+        };
+
+        image.src = objectUrl;
+      });
+    }
+
+    function updatePreview() {
       preview.innerHTML = '';
-
-      const fileInputs = [photo1, photo2, photo3];
 
       fileInputs.forEach((input) => {
         input.value = '';
       });
 
-      files.forEach((file, index) => {
-
+      selectedFiles.forEach((file, index) => {
         const transfer = new DataTransfer();
         transfer.items.add(file);
         fileInputs[index].files = transfer.files;
@@ -546,19 +610,51 @@ import { PawPrint, MapPin, Upload, ArrowLeft } from 'lucide-astro';
         preview.appendChild(wrapper);
       });
 
-      if (files.length > 0) {
+      if (selectedFiles.length > 0) {
         preview.classList.remove('hidden');
 
-        photoCount.textContent =
-          `${files.length} / 3 photos`;
+        countElement.textContent =
+          `${selectedFiles.length} / 3 photos`;
 
-        photoCount.classList.remove('hidden');
+        countElement.classList.remove('hidden');
       } else {
         preview.classList.add('hidden');
-        photoCount.classList.add('hidden');
+        countElement.classList.add('hidden');
+      }
+    }
+
+    photoInput.addEventListener('change', async () => {
+      const newFiles = Array.from(photoInput.files ?? []);
+
+      if (selectedFiles.length + newFiles.length > MAX_PHOTOS) {
+        alert('You can upload up to 3 photos.');
+        photoInput.value = '';
+        return;
       }
 
-    });
+      try {
+        const optimizedFiles = await Promise.all(
+          newFiles.map((file) => optimizeImage(file))
+        );
 
+        optimizedFiles.forEach((file) => {
+
+
+          selectedFiles.push(file);
+        });
+
+        updatePreview();
+
+        photoInput.value = '';
+      } catch (error) {
+        console.error(error);
+
+        alert(
+          'There was a problem processing one of the photos. Please try again.'
+        );
+
+        photoInput.value = '';
+      }
+    });
   }
 </script>
