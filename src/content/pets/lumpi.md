@@ -3,7 +3,7 @@ name: Lumpi
 species: Dog
 breed: Mixed breed
 photos:
-  - /images/pets/lumpi.png
+  - /images/pets/lumpi.webp
 date: 2026-08-10
 location: Salta, Argentina
 contactName: Ana

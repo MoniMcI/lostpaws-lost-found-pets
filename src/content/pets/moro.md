@@ -3,7 +3,7 @@ name: Moro
 species: Dog
 breed: German Shepherd
 photos:
-  - /images/pets/moro.png
+  - /images/pets/moro.webp
 date: 2026-08-15
 location: Salta, Argentina
 contactName: Monica

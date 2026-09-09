@@ -3,7 +3,7 @@ name: Rocky
 species: Dog
 breed: Mixed breed
 photos:
-  - /images/pets/rocky.png
+  - /images/pets/rocky.webp
 date: 2026-08-09
 location: Salta, Argentina
 contactName: Carlos

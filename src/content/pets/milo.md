@@ -3,7 +3,7 @@ name: Milo
 species: Cat
 breed: Tabby
 photos:
-  - /images/pets/milo.png
+  - /images/pets/milo.webp
 date: 2026-08-07
 location: Salta, Argentina
 contactName: Martín

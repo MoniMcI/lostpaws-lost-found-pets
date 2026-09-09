@@ -3,7 +3,7 @@ name: Luna
 species: Dog
 breed: Mixed breed
 photos:
-  - /images/pets/luna.png
+  - /images/pets/luna.webp
 date: 2026-08-08
 location: Salta, Argentina
 contactName: Laura
